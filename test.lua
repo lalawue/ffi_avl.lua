@@ -3,6 +3,12 @@ local avl = require("ffi_avl")
 local tree =
     avl.new(
     function(a, b)
+        if type(a) == "table" then
+            a = a[1]
+        end
+        if type(b) == "table" then
+            b = b[1]
+        end
         return a - b
     end
 )
@@ -11,7 +17,7 @@ local function _printTree(tag, tree)
     io.write(tag)
     local v, h = tree:first()
     repeat
-        io.write(string.format("%d (h:%d), ", v, h))
+        io.write(string.format("%d (h:%d), ", type(v) == "table" and v[1] or v, h))
         v, h = tree:next(v)
     until v == nil
     print("")
@@ -65,8 +71,13 @@ for _, value in ipairs(tree:range(2, 3)) do
 end
 print("")
 
+print("-- add table {5}, {10}")
+tree:insert({5})
+tree:insert({10})
+_printTree("table: ", tree)
+
 print("-- performance")
-local max_bound = 100 * 1000
+local max_bound = 1000 * 1000
 local o = os.clock()
 for i = 50, max_bound + 50, 1 do
     tree:insert(i)
@@ -74,7 +85,7 @@ end
 print("insert " .. max_bound .. " elements: ", os.clock() - o)
 
 o = os.clock()
-for i = 50, max_bound + 50, 1 do
+for i = max_bound + 50, 50, -1 do
     tree:remove(i)
 end
 print("remove " .. max_bound .. " elements: ", os.clock() - o)
