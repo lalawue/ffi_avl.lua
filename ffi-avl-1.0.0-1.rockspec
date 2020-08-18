@@ -1,5 +1,5 @@
 package = "ffi-avl"
-version = "scm-1"
+version = "1.0.0-1"
 source = {
    url = "git+https://github.com/lalawue/ffi_avl.lua/"
 }
@@ -9,7 +9,8 @@ description = {
        FFI AVL implementation for LuaJIT
    ]],
    homepage = "https://github.com/lalawue/ffi_avl.lua",
-   license = "MIT/X11"
+   license = "MIT/X11",
+   maintainer = "lalawue <suchaaa@gmail.com>"
 }
 build = {
    type = "builtin",
