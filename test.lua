@@ -83,7 +83,7 @@ while true do
     round = round + 1
     io.write("-- performance round:" .. round)
     if round > 1 then
-        io.write(" insert_mean:" .. insert_mean .. " remove_mean:" .. remove_mean)
+        io.write(" insert_mean:" .. insert_mean/(round-1) .. " remove_mean:" .. remove_mean/(round-1))
     end
     io.write("\n")
 
