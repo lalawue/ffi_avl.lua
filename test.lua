@@ -76,16 +76,32 @@ tree:insert({5})
 tree:insert({10})
 _printTree("table: ", tree)
 
-print("-- performance")
-local max_bound = 1000 * 1000
-local o = os.clock()
-for i = 50, max_bound + 50, 1 do
-    tree:insert(i)
-end
-print("insert " .. max_bound .. " elements: ", os.clock() - o)
+local round = 0
+local insert_mean = 0
+local remove_mean = 0
+while true do
+    round = round + 1
+    io.write("-- performance round:" .. round)
+    if round > 1 then
+        io.write(" insert_mean:" .. insert_mean .. " remove_mean:" .. remove_mean)
+    end
+    io.write("\n")
 
-o = os.clock()
-for i = max_bound + 50, 50, -1 do
-    tree:remove(i)
+    local max_bound = 1000 * 1000
+    local o = os.clock()
+    for i = 50, max_bound + 50, 1 do
+        tree:insert(i)
+    end
+    local t = os.clock() - o
+    insert_mean = insert_mean + t
+    print("insert " .. max_bound .. " elements: ", t)
+
+    o = os.clock()
+    for i = max_bound + 50, 50, -1 do
+        tree:remove(i)
+    end
+    tree:clear()
+    t = os.clock() - o
+    remove_mean = remove_mean + t
+    print("remove " .. max_bound .. " elements: ", t)
 end
-print("remove " .. max_bound .. " elements: ", os.clock() - o)
