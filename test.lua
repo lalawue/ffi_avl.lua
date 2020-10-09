@@ -76,6 +76,10 @@ tree:insert({5})
 tree:insert({10})
 _printTree("table: ", tree)
 
+print("-- find table {10}")
+local v = tree:find({10,9,8,7})
+print("find table {10}:", type(v)=="table"and v[1] or v, "count:", #v)
+
 local round = 0
 local insert_mean = 0
 local remove_mean = 0
